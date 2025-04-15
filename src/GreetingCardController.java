@@ -1,58 +1,79 @@
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
+import java.util.List;
+import java.util.Random;
 
-public class GreetingCardOptionsController {
-
-    @FXML
-    private CheckBox balloonsCheckBox;
-
-    @FXML
-    private CheckBox heartsCheckBox;
+public class GreetingCardController {
 
     @FXML
-    private CheckBox starsCheckBox;
+    private Pane cardPane;
 
-    @FXML
-    private Button generateButton;
+    private Random random = new Random();
+    private final double CARD_WIDTH = 400;
+    private final double CARD_HEIGHT = 300;
 
-    @FXML
-    private void generateCard() {
-        List<String> selectedElements = new ArrayList<>();
-        if (balloonsCheckBox.isSelected()) {
-            selectedElements.add("balloons");
-        }
-        if (heartsCheckBox.isSelected()) {
-            selectedElements.add("hearts");
-        }
-        if (starsCheckBox.isSelected()) {
-            selectedElements.add("stars");
-        }
+    public void drawElements(List<String> elements) {
+        cardPane.getChildren().clear();
+        int numberOfElements = 50;
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("greeting_card.fxml"));
-            Pane cardPane = loader.load();
-            GreetingCardController controller = loader.getController();
-            controller.drawElements(selectedElements);
+        for (int i = 0; i < numberOfElements; i++) {
+            double x = random.nextDouble() * CARD_WIDTH;
+            double y = random.nextDouble() * CARD_HEIGHT;
+            Color color = Color.color(random.nextDouble(), random.nextDouble(), random.nextDouble());
 
-            Stage stage = new Stage();
-            stage.setTitle("თქვენი მისალოცი ბარათი");
-            stage.setScene(new Scene(cardPane, 400, 300));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (elements.size() == 1) {
+                switch (elements.get(0)) {
+                    case "balloons":
+                        drawBalloon(x, y, color);
+                        break;
+                    case "hearts":
+                        drawHeart(x, y, color);
+                        break;
+                    case "stars":
+                        drawStar(x, y, color);
+                        break;
+                }
+            } else if (elements.size() > 1) {
+                String randomElement = elements.get(random.nextInt(elements.size()));
+                switch (randomElement) {
+                    case "balloons":
+                        drawBalloon(x, y, color);
+                        break;
+                    case "hearts":
+                        drawHeart(x, y, color);
+                        break;
+                    case "stars":
+                        drawStar(x, y, color);
+                        break;
+                }
+            }
         }
     }
+
+    private void drawBalloon(double x, double y, Color color) {
+        Circle balloon = new Circle(x, y, 15);
+        balloon.setFill(color);
+        cardPane.getChildren().add(balloon);
+    }
+
+    private void drawHeart(double x, double y, Color color) {
+
+        javafx.scene.shape.Path heart = new javafx.scene.shape.Path(
+                new javafx.scene.shape.MoveTo(x, y + 5),
+                new javafx.scene.shape.CubicCurveTo(x - 5, y - 5, x - 15, y + 5, x, y + 15),
+                new javafx.scene.shape.CubicCurveTo(x + 15, y + 5, x + 5, y - 5, x, y + 5)
+        );
+        heart.setFill(color);
+        cardPane.getChildren().add(heart);
+    }
+
+    private void drawStar(double x, double y, Color color) {
+
+        Polygon star = new Polygon(
+                x, y - 10,
+                x + 4, y - 3);}
 }
