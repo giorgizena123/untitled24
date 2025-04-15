@@ -1,3 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties/>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="200.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PetChooserController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <Label text="როგორი მისალოცი ბარათი გინდა?" />
+    <CheckBox fx:id="balloonsCheckBox" text="ბუშტები" />
+    <CheckBox fx:id="heartsCheckBox" text="გულები" />
+    <CheckBox fx:id="starsCheckBox" text="ვარსკვლავები" />
+    <Button fx:id="generateButton" text="გენერირება" onAction="#generateCard" />
+</VBox>
